@@ -1,0 +1,10 @@
+version: '1'
+
+services:
+  custom_llm:
+    build: ./custom_llm/
+    command: sleep infinity
+    stdin_open: true
+    tty: true
+    ports:
+      - "11434:11434"
