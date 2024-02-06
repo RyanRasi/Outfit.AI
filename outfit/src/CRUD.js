@@ -71,15 +71,15 @@ const CRUD = () => {
                 <Row>
                     <Col>
                     <input type="text" className="form-control" placeholder="Enter Name"
-                    value = {name}></input>
+                    value = {name} onChange={(e) => setName(e.target.value)}></input>
                     </Col>
                     <Col>
                     <input type="text" className="form-control" placeholder="Enter Type"
-                    value = {type}></input>
+                    value = {type} onChange={(e) => setType(e.target.value)}></input>
                     </Col>
                     <Col>
                     <input type="text" className="form-control" placeholder="Enter Color"
-                    value = {color}></input>
+                    value = {color} onChange={(e) => setColor(e.target.value)}></input>
                     </Col>
                     <Col>
                     <button className="btn btn-primary">Submit</button>
@@ -127,13 +127,19 @@ const CRUD = () => {
                 <Modal.Body>
                 <Row>
                     <Col>
-                    <input type="text" className="form-control" placeholder="Enter Name"></input>
+                    <input type="text" className="form-control" placeholder="Enter Name"
+                    value = {editName} onChange={(e) => setEditName(e.target.value)}></input>
                     </Col>
                     <Col>
-                    <input type="text" className="form-control" placeholder="Enter Type"></input>
+                    <input type="text" className="form-control" placeholder="Enter Type"
+                    value = {editType} onChange={(e) => setEditType(e.target.value)}></input>
                     </Col>
                     <Col>
-                    <input type="text" className="form-control" placeholder="Enter Color"></input>
+                    <input type="text" className="form-control" placeholder="Enter Color"
+                    value = {editColor} onChange={(e) => setEditColor(e.target.value)}></input>
+                    </Col>
+                    <Col>
+                    <button className="btn btn-primary">Submit</button>
                     </Col>
                 </Row>
                 </Modal.Body>
