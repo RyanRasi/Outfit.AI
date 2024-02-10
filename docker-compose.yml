@@ -8,3 +8,15 @@ services:
     tty: true
     ports:
       - "11434:11434"
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+      - MYSQL_DATABASE=outfitcrud
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
