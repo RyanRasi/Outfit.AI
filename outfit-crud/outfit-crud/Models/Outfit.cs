@@ -5,11 +5,11 @@ namespace outfit_crud.Models
 	{
 		public int ID { get; set; }
 
-        public string? Name { get; set; }
+        public string? Clothing_Name { get; set; }
 
-        public string? Type { get; set; }
+        public string? Clothing_Type { get; set; }
 
-        public string? Color { get; set; }
+        public string? Clothing_Color { get; set; }
     }
 }
 

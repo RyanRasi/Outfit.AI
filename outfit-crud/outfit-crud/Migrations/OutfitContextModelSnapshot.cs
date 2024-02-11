@@ -29,13 +29,13 @@ namespace outfit_crud.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Color")
+                    b.Property<string>("Clothing_Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Clothing_Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Clothing_Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

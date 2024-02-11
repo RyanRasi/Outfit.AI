@@ -16,9 +16,9 @@ namespace outfit_crud.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Clothing_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Clothing_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Clothing_Color = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -11,7 +11,7 @@ using outfit_crud.Models;
 namespace outfit_crud.Migrations
 {
     [DbContext(typeof(OutfitContext))]
-    [Migration("20240210161048_initial")]
+    [Migration("20240211124616_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -32,13 +32,13 @@ namespace outfit_crud.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Color")
+                    b.Property<string>("Clothing_Color")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Clothing_Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Clothing_Type")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

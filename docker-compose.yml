@@ -9,14 +9,14 @@ services:
     ports:
       - "11434:11434"
   db:
-    image: mysql:5.7
-    ports:
-      - "3306:3306"
+    build: ./database
     environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_USER=myuser
-      - MYSQL_PASSWORD=mypassword
-      - MYSQL_DATABASE=outfitcrud
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
+      SA_PASSWORD: "z48%Mnt4q]"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database-data:/var/opt/mssql
+
+volumes:
+    database-data:
