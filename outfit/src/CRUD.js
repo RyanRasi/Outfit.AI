@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
 
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -7,6 +8,9 @@ import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const CRUD = () => {
 
@@ -47,26 +51,100 @@ const CRUD = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        setData(empdata)
+        getData();
     }, [])
 
+    const getData = () => {
+        axios.get('https://localhost:7299/api/Outfit')
+        .then((result) => {
+            setData(result.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
     const handleEdit = (id) => {
-        // alert(id);
         handleShow();
+        axios.get(`https://localhost:7299/api/Outfit/${id}`)
+        .then((result) => {
+            setEditName(result.data.name);
+            setEditType(result.data.type);
+            setEditColor(result.data.color);
+            setEditID(id);
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     const handleDelete = (id) => {
         if (window.confirm("Are you sure you want to delete this item of clothing?") == true) {
-            alert(id);
+            axios.delete(`https://localhost:7299/api/Outfit/${id}`)
+            .then((result) => {
+                if(result.status === 200) {
+                    toast.success('Outfit Item has been deleted');
+                    getData();
+                }
+            })
+            .catch((error) => {
+            toast.error(error);
+            });
         }
     }
 
     const handleUpdate = (id) => {
-        
+        const url = `https://localhost:7299/api/Outfit/${editID}`;
+        const data = 
+        {
+            "id": editID,
+            "clothing_Name": editName,
+            "clothing_Type": editType,
+            "clothing_Color": editColor
+        }
+
+        axios.put(url, data)
+        .then((result) => {
+            handleClose();
+            getData();
+            clear();
+            toast.success('Outfit Item has been updated');
+        }).catch((error) => {
+            toast.error(error);
+        });
+    }
+
+    const handleSave = () => {
+        const url = 'https://localhost:7299/api/Outfit';
+        const data = 
+            {
+                "clothing_Name": name,
+                "clothing_Type": type,
+                "clothing_Color": color
+            }
+
+            axios.post(url, data)
+            .then((result) => {
+                getData();
+                clear();
+                toast.success('Outfit Item has been added');
+            }).catch((error) => {
+                toast.error(error);
+            });
+    }
+
+    const clear = () => {
+        setName('');
+        setType('');
+        setColor('');
+        setEditName('');
+        setEditType('');
+        setEditColor('');
     }
 
     return (
         <Fragment>
+            <ToastContainer>
             <Container>
                 <Row>
                     <Col>
@@ -82,7 +160,7 @@ const CRUD = () => {
                     value = {color} onChange={(e) => setColor(e.target.value)}></input>
                     </Col>
                     <Col>
-                    <button className="btn btn-primary">Submit</button>
+                    <button className="btn btn-primary" onClick={() => handleSave()}>Submit</button>
                     </Col>
                 </Row>
             </Container>
@@ -153,7 +231,7 @@ const CRUD = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
+            </ToastContainer>
         </Fragment>
     )
 }
