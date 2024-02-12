@@ -1,2 +1,4 @@
-* linguist-vendored
-*.cs linguist-vendored=false
+outfit/src/App.js linguist-vendored
+outfit/src/index.js linguist-vendored
+outfit/src/reportWebVitals.js linguist-vendored
+outfit/src/setupTests.js linguist-vendored
