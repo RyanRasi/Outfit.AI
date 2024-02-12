@@ -17,6 +17,13 @@ services:
       - "1433:1433"
     volumes:
       - ./database-data:/var/opt/mssql
-
+  react-frontend:
+    build: ./outfit
+    ports:
+      - "8080:80"
+  net-backend:
+    build: ./outfit-crud
+    ports:
+      - "7299:7299"
 volumes:
     database-data:
