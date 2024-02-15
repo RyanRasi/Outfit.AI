@@ -194,7 +194,7 @@ const CRUD = () => {
                 <Row>
                     <Col>
                         <button className="btn btn-primary" onClick={handleRecommend}>
-                            {recommendationStatus === 'loading' ? 'Loading...' : 'Recommend'}
+                            {recommendationStatus === 'loading' ? 'Loading...' : 'Generate Recommendation'}
                         </button>
                     </Col>
                 </Row>
@@ -204,9 +204,6 @@ const CRUD = () => {
                         {recommendationStatus === 'success' && (
                             <div>
                                 <p>{resultText}</p>
-                                <button className="btn btn-primary" onClick={() => setRecommendationStatus('initial')}>
-                                    Recommend Another
-                                </button>
                             </div>
                         )}
                     </Col>
