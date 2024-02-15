@@ -20,7 +20,7 @@ services:
   react-frontend:
     build: ./outfit
     ports:
-      - "8080:80"
+      - "3000:3000"
   net-backend:
     build: ./outfit-crud
     ports:
