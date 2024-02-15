@@ -38,4 +38,4 @@ Usage
 
 ### How to use:
 Use the form to add clothing items, providing the item name, type, and color.
-Click the "Generate Recommendations" button to receive personalized outfit suggestions.
+Click the "Generate Recommendation" button to receive personalized outfit suggestions.
