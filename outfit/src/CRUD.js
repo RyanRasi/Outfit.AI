@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 const CRUD = () => {
 
@@ -38,18 +38,14 @@ const CRUD = () => {
 
     const handleRecommend = () => {
         setRecommendationStatus('loading');
-        all_clothes = []
+        const all_clothes = []
         // Get all outfits API call
         axios.get('https://localhost:7299/api/Outfit')
         .then((result) => {
             (result.data).map((item, index) => {
-                all_clothes.append(`${item.name} ${item.type} that is ${item.color}`)
+                all_clothes.push(`${item.clothing_Name} ${item.clothing_Type} that is ${item.clothing_Color}`);
         })
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-
+        console.log(all_clothes)
         // Get the current date
         const currentDate = new Date();
 
@@ -72,31 +68,40 @@ const CRUD = () => {
           }
         };
         // Make API call for recommendation
-        const current_clothing = all_clothes.join(" and a ");
+        let current_clothing = all_clothes.join(" and a ");
+        console.log(current_clothing);
         const type_of_day = isWeekend ? 'weekend' : 'weekday';
         const current_season = getSeason(currentMonth);;
 
         const params = {
             "model": "outfit",
             "prompt": `I have a ${current_clothing}. Give me an outfit for a ${type_of_day} in ${current_season}`,
-            "stream": False
+            "stream": false
         }
+        console.log(params)
         axios.post('http://127.0.0.1:11434/api/generate', params)
             .then((result) => {
                 setRecommendationStatus('success');
-                setResultText(result.data); // Assuming your API returns the recommendation text
+                console.log(result);
+                console.log(result.data);
+                setResultText(result.data);
             })
             .catch((error) => {
                 console.log(error);
                 setRecommendationStatus('initial');
                 setResultText('Error fetching recommendation.');
             });
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     };
 
     const getData = () => {
         axios.get('https://localhost:7299/api/Outfit')
             .then((result) => {
-                setData(result.data)
+                setData(result.data);
+                console.log(result.data);
             })
             .catch((error) => {
                 console.log(error)
@@ -118,7 +123,7 @@ const CRUD = () => {
     }
 
     const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this item of clothing?") == true) {
+        if (window.confirm("Are you sure you want to delete this item of clothing?") === true) {
             axios.delete(`https://localhost:7299/api/Outfit/${id}`)
                 .then((result) => {
                     if (result.status === 200) {
@@ -183,7 +188,7 @@ const CRUD = () => {
 
     return (
         <Fragment>
-            <ToastContainer>
+            <ToastContainer/>
                 <Container>
                     <Row>
                         <Col>
@@ -240,9 +245,9 @@ const CRUD = () => {
                                     return (
                                         <tr key={index}>
                                             <td>{item.id}</td>
-                                            <td>{item.name}</td>
-                                            <td>{item.type}</td>
-                                            <td>{item.color}</td>
+                                            <td>{item.clothing_Name}</td>
+                                            <td>{item.clothing_Type}</td>
+                                            <td>{item.clothing_Color}</td>
                                             <td colSpan={2}>
                                                 <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>Edit</button> &nbsp;
                                                 <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
@@ -274,9 +279,6 @@ const CRUD = () => {
                                 <input type="text" className="form-control" placeholder="Enter Color"
                                     value={editColor} onChange={(e) => setEditColor(e.target.value)}></input>
                             </Col>
-                            <Col>
-                                <button className="btn btn-primary">Submit</button>
-                            </Col>
                         </Row>
                     </Modal.Body>
 
@@ -289,7 +291,6 @@ const CRUD = () => {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </ToastContainer>
         </Fragment>
     )
 }
