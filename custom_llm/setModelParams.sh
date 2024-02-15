@@ -3,7 +3,7 @@
 input_file_name="Modelfile.template"
 output_file_name="Modelfile"
 old_line="SYSTEM_MESSAGE"
-system_message="You are designed to be an outfit creator. You will be given a list of clothes that the user has. Please use this information to generate creative and stylish outfits."
+system_message="You are designed to be an outfit creator. You will be given a list of clothes that the user has. Please use this information to generate creative and stylish outfits. The responses you give have to be 3 sentances max."
 
 # Check if the input file exists
 if [ -e "$input_file_name" ]; then
