@@ -41,60 +41,60 @@ const CRUD = () => {
         const all_clothes = []
         // Get all outfits API call
         axios.get('https://localhost:7299/api/Outfit')
-        .then((result) => {
-            (result.data).map((item, index) => {
-                all_clothes.push(`${item.clothing_Name} ${item.clothing_Type} that is ${item.clothing_Color}`);
-        })
-        console.log(all_clothes)
-        // Get the current date
-        const currentDate = new Date();
-
-        // Check if it's a weekend (Saturday or Sunday)
-        const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
-
-        // Get the current month
-        const currentMonth = currentDate.getMonth();
-
-        // Determine the current season based on the month
-        const getSeason = month => {
-          if (month >= 2 && month <= 4) {
-            return 'Spring';
-          } else if (month >= 5 && month <= 7) {
-            return 'Summer';
-          } else if (month >= 8 && month <= 10) {
-            return 'Autumn';
-          } else {
-            return 'Winter';
-          }
-        };
-        // Make API call for recommendation
-        let current_clothing = all_clothes.join(" and a ");
-        console.log(current_clothing);
-        const type_of_day = isWeekend ? 'weekend' : 'weekday';
-        const current_season = getSeason(currentMonth);;
-
-        const params = {
-            "model": "outfit",
-            "prompt": `I have a ${current_clothing}. Give me an outfit for a ${type_of_day} in ${current_season}`,
-            "stream": false
-        }
-        console.log(params)
-        axios.post('http://127.0.0.1:11434/api/generate', params)
             .then((result) => {
-                setRecommendationStatus('success');
-                console.log(result);
-                console.log(result.data);
-                setResultText(result.data);
+                (result.data).map((item, index) => {
+                    all_clothes.push(`${item.clothing_Name} ${item.clothing_Type} that is ${item.clothing_Color}`);
+                })
+                console.log(all_clothes)
+                // Get the current date
+                const currentDate = new Date();
+
+                // Check if it's a weekend (Saturday or Sunday)
+                const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+
+                // Get the current month
+                const currentMonth = currentDate.getMonth();
+
+                // Determine the current season based on the month
+                const getSeason = month => {
+                    if (month >= 2 && month <= 4) {
+                        return 'Spring';
+                    } else if (month >= 5 && month <= 7) {
+                        return 'Summer';
+                    } else if (month >= 8 && month <= 10) {
+                        return 'Autumn';
+                    } else {
+                        return 'Winter';
+                    }
+                };
+                // Make API call for recommendation
+                let current_clothing = all_clothes.join(" and a ");
+                console.log(current_clothing);
+                const type_of_day = isWeekend ? 'weekend' : 'weekday';
+                const current_season = getSeason(currentMonth);;
+
+                const params = {
+                    "model": "outfit",
+                    "prompt": `I have a ${current_clothing}. Give me an outfit for a ${type_of_day} in ${current_season}`,
+                    "stream": false
+                }
+                console.log(params)
+                axios.post('http://127.0.0.1:11434/api/generate', params)
+                    .then((result) => {
+                        console.log(result);
+                        console.log(result.data.response);
+                        setRecommendationStatus('success');
+                        setResultText(result.data.response);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        setRecommendationStatus('initial');
+                        setResultText('Error fetching recommendation.');
+                    });
             })
             .catch((error) => {
-                console.log(error);
-                setRecommendationStatus('initial');
-                setResultText('Error fetching recommendation.');
-            });
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+                console.log(error)
+            })
     };
 
     const getData = () => {
@@ -188,109 +188,114 @@ const CRUD = () => {
 
     return (
         <Fragment>
-            <ToastContainer/>
-                <Container>
-                    <Row>
-                        <Col>
-                            <button className="btn btn-primary" onClick={handleRecommend}>
-                                {recommendationStatus === 'loading' ? 'Loading...' : 'Recommend'}
-                            </button>
-                        </Col>
-                        <Col>
-                            {recommendationStatus === 'success' && (
-                                <div>
-                                    <p>{resultText}</p>
-                                    <button className="btn btn-primary" onClick={() => setRecommendationStatus('initial')}>
-                                        Recommend Another
-                                    </button>
-                                </div>
-                            )}
-                        </Col>
-                    </Row>
-                </Container>
-                <Container>
+            <ToastContainer />
+            <br></br>
+            <Container>
+                <Row>
+                    <Col>
+                        <button className="btn btn-primary" onClick={handleRecommend}>
+                            {recommendationStatus === 'loading' ? 'Loading...' : 'Recommend'}
+                        </button>
+                    </Col>
+                </Row>
+                <br></br>
+                <Row>
+                    <Col>
+                        {recommendationStatus === 'success' && (
+                            <div>
+                                <p>{resultText}</p>
+                                <button className="btn btn-primary" onClick={() => setRecommendationStatus('initial')}>
+                                    Recommend Another
+                                </button>
+                            </div>
+                        )}
+                    </Col>
+                </Row>
+            </Container>
+            <br></br><br></br>
+            <Container>
+                <Row>
+                    <Col>
+                        <input type="text" className="form-control" placeholder="Enter Name"
+                            value={name} onChange={(e) => setName(e.target.value)}></input>
+                    </Col>
+                    <Col>
+                        <input type="text" className="form-control" placeholder="Enter Type"
+                            value={type} onChange={(e) => setType(e.target.value)}></input>
+                    </Col>
+                    <Col>
+                        <input type="text" className="form-control" placeholder="Enter Color"
+                            value={color} onChange={(e) => setColor(e.target.value)}></input>
+                    </Col>
+                    <Col>
+                        <button className="btn btn-primary" onClick={() => handleSave()}>Submit</button>
+                    </Col>
+                </Row>
+            </Container>
+            <br></br>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Colour</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        data && data.length > 0 ?
+                            data.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{item.id}</td>
+                                        <td>{item.clothing_Name}</td>
+                                        <td>{item.clothing_Type}</td>
+                                        <td>{item.clothing_Color}</td>
+                                        <td colSpan={2}>
+                                            <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>Edit</button> &nbsp;
+                                            <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            :
+                            'Loading...'
+                    }
+                </tbody>
+            </Table>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modify / Update Clothing</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
                     <Row>
                         <Col>
                             <input type="text" className="form-control" placeholder="Enter Name"
-                                value={name} onChange={(e) => setName(e.target.value)}></input>
+                                value={editName} onChange={(e) => setEditName(e.target.value)}></input>
                         </Col>
                         <Col>
                             <input type="text" className="form-control" placeholder="Enter Type"
-                                value={type} onChange={(e) => setType(e.target.value)}></input>
+                                value={editType} onChange={(e) => setEditType(e.target.value)}></input>
                         </Col>
                         <Col>
                             <input type="text" className="form-control" placeholder="Enter Color"
-                                value={color} onChange={(e) => setColor(e.target.value)}></input>
-                        </Col>
-                        <Col>
-                            <button className="btn btn-primary" onClick={() => handleSave()}>Submit</button>
+                                value={editColor} onChange={(e) => setEditColor(e.target.value)}></input>
                         </Col>
                     </Row>
-                </Container>
-                <br></br>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Colour</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data && data.length > 0 ?
-                                data.map((item, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{item.id}</td>
-                                            <td>{item.clothing_Name}</td>
-                                            <td>{item.clothing_Type}</td>
-                                            <td>{item.clothing_Color}</td>
-                                            <td colSpan={2}>
-                                                <button className="btn btn-primary" onClick={() => handleEdit(item.id)}>Edit</button> &nbsp;
-                                                <button className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                                :
-                                'Loading...'
-                        }
-                    </tbody>
-                </Table>
+                </Modal.Body>
 
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modify / Update Clothing</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Row>
-                            <Col>
-                                <input type="text" className="form-control" placeholder="Enter Name"
-                                    value={editName} onChange={(e) => setEditName(e.target.value)}></input>
-                            </Col>
-                            <Col>
-                                <input type="text" className="form-control" placeholder="Enter Type"
-                                    value={editType} onChange={(e) => setEditType(e.target.value)}></input>
-                            </Col>
-                            <Col>
-                                <input type="text" className="form-control" placeholder="Enter Color"
-                                    value={editColor} onChange={(e) => setEditColor(e.target.value)}></input>
-                            </Col>
-                        </Row>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleUpdate}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleUpdate}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Fragment>
     )
 }
