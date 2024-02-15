@@ -1,6 +1,7 @@
 # Outfit.AI - Personalized Outfit Recommendation LLM Model
 
-Welcome to the Personalized Outfit Recommendation LLM (Language Model) project! This system utilizes a Microsoft SQL database, a .NET 7 API Controller, a React frontend, and a Language Model for outfit recommendations. Docker Compose is used to manage the deployment of these components.
+A Personalized Outfit Recommendation LLM (Large Language Model) that has a react frontend to return personalised outfits for the user to wear per day. This system utilizes a Microsoft SQL database, a .NET 7 API Controller, a React frontend, and a Language Model for outfit recommendations. The LLM also utilises the current season and day of the week to further tailor recommendations for the user. 
+Docker Compose is used to manage the deployment of these components.
 
 ## Prerequisites
 Make sure you have Docker and Docker Compose installed on your system.
@@ -12,7 +13,7 @@ Make sure you have Docker and Docker Compose installed on your system.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/outfit-recommendation-llm.git
+   git clone https://github.com/RyanRasi/Outfit.AI.git
    cd outfit-recommendation-llm
    ```
 2. Build and run the containers using Docker Compose:
