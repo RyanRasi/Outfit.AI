@@ -40,7 +40,7 @@ const CRUD = () => {
         setRecommendationStatus('loading');
         const all_clothes = []
         // Get all outfits API call
-        axios.get('https://127.0.0.1:7299/api/Outfit')
+        axios.get('http://127.0.0.1:7299/api/Outfit')
             .then((result) => {
                 (result.data).map((item, index) => {
                     all_clothes.push(`${item.clothing_Name} ${item.clothing_Type} that is ${item.clothing_Color}`);
@@ -79,7 +79,7 @@ const CRUD = () => {
                     "stream": false
                 }
                 console.log(params)
-                axios.post('http://127.0.0.1:11434/api/generate', params)
+                axios.post('https://127.0.0.1:11434/api/generate', params)
                     .then((result) => {
                         console.log(result);
                         console.log(result.data.response);
@@ -98,7 +98,7 @@ const CRUD = () => {
     };
 
     const getData = () => {
-        axios.get('https://127.0.0.1:7299/api/Outfit')
+        axios.get('http://127.0.0.1:7299/api/Outfit')
             .then((result) => {
                 setData(result.data);
                 console.log(result.data);
@@ -110,7 +110,7 @@ const CRUD = () => {
 
     const handleEdit = (id) => {
         handleShow();
-        axios.get(`https://127.0.0.1:7299/api/Outfit/${id}`)
+        axios.get(`http://127.0.0.1:7299/api/Outfit/${id}`)
             .then((result) => {
                 setEditName(result.data.name);
                 setEditType(result.data.type);
@@ -124,7 +124,7 @@ const CRUD = () => {
 
     const handleDelete = (id) => {
         if (window.confirm("Are you sure you want to delete this item of clothing?") === true) {
-            axios.delete(`https://127.0.0.1:7299/api/Outfit/${id}`)
+            axios.delete(`http://127.0.0.1:7299/api/Outfit/${id}`)
                 .then((result) => {
                     if (result.status === 200) {
                         toast.success('Outfit Item has been deleted');
@@ -138,7 +138,7 @@ const CRUD = () => {
     }
 
     const handleUpdate = (id) => {
-        const url = `https://127.0.0.1:7299/api/Outfit/${editID}`;
+        const url = `http://127.0.0.1:7299/api/Outfit/${editID}`;
         const data =
         {
             "id": editID,
@@ -159,7 +159,7 @@ const CRUD = () => {
     }
 
     const handleSave = () => {
-        const url = 'https://127.0.0.1:7299/api/Outfit';
+        const url = 'http://127.0.0.1:7299/api/Outfit';
         const data =
         {
             "clothing_Name": name,
