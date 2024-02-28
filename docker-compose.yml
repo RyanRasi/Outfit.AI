@@ -15,8 +15,6 @@ services:
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-    volumes:
-      - ./database-data:/var/opt/mssql
   react-frontend:
     build: ./outfit
     ports:
@@ -24,6 +22,6 @@ services:
   net-backend:
     build: ./outfit-crud
     ports:
-      - "7299:7299"
+      - "7299:80"
 volumes:
     database-data:
