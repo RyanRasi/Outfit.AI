@@ -79,7 +79,7 @@ const CRUD = () => {
                     "stream": false
                 }
                 console.log(params)
-                axios.post('https://127.0.0.1:11434/api/generate', params)
+                axios.post('http://127.0.0.1:11434/api/generate', params)
                     .then((result) => {
                         console.log(result);
                         console.log(result.data.response);
